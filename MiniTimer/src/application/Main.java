@@ -13,10 +13,19 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	private static int minute = 0;
+	private static int second = 0;
+
+	String timeString() {
+		String minuteString = (minute < 10) ? "0" + String.valueOf(minute) : String.valueOf(minute);
+		String secondString = (second < 10) ? "0" + String.valueOf(second) : String.valueOf(second);
+		return (minuteString + " : " + secondString);
+	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			var label = new Label("00:00");
+			var label = new Label("00 : 00");
 			label.setFont(new Font(50));
 
 			String[] buttonLabel = {"10min", "1min", "10sec", "RESET", "STOP", "START"};
@@ -26,27 +35,33 @@ public class Main extends Application {
 				button[i].setMinSize(60, 30);
 			}
 			// 10min
-			button[0].setOnAction((actionEvent)->{
-				//
+			button[0].setOnAction((actionEvent) -> {
+				minute += 10;
+
+				if(minute > 99) {
+					minute -= 100;
+				}
+
+				label.setText(timeString());
 			});
 			// 1min
-			button[1].setOnAction((actionEvent)->{
+			button[1].setOnAction((actionEvent) -> {
 				//
 			});
 			// 10sec
-			button[2].setOnAction((actionEvent)->{
+			button[2].setOnAction((actionEvent) -> {
 				//
 			});
 			// RESET
-			button[3].setOnAction((actionEvent)->{
+			button[3].setOnAction((actionEvent) -> {
 				//
 			});
 			// STOP
-			button[4].setOnAction((actionEvent)->{
+			button[4].setOnAction((actionEvent) -> {
 				//
 			});
-			// STAT
-			button[5].setOnAction((actionEvent)->{
+			// START
+			button[5].setOnAction((actionEvent) -> {
 				//
 			});
 
