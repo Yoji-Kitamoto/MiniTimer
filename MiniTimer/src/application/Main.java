@@ -25,7 +25,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			var label = new Label("00 : 00");
+			var label = new Label(timeString());
 			label.setFont(new Font(50));
 
 			String[] buttonLabel = {"10min", "1min", "10sec", "RESET", "STOP", "START"};
@@ -66,7 +66,9 @@ public class Main extends Application {
 			});
 			// RESET
 			button[3].setOnAction((actionEvent) -> {
-				//
+				minute = 0;
+				second = 0;
+				label.setText(timeString());
 			});
 			// STOP
 			button[4].setOnAction((actionEvent) -> {
