@@ -46,7 +46,13 @@ public class Main extends Application {
 			});
 			// 1min
 			button[1].setOnAction((actionEvent) -> {
-				//
+				minute++;
+
+				if(minute > 99) {
+					minute -= 100;
+				}
+
+				label.setText(timeString());
 			});
 			// 10sec
 			button[2].setOnAction((actionEvent) -> {
