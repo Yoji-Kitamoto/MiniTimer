@@ -56,7 +56,13 @@ public class Main extends Application {
 			});
 			// 10sec
 			button[2].setOnAction((actionEvent) -> {
-				//
+				second += 10;
+
+				if(second > 59) {
+					second -= 60;
+				}
+
+				label.setText(timeString());
 			});
 			// RESET
 			button[3].setOnAction((actionEvent) -> {
