@@ -72,11 +72,21 @@ public class Main extends Application {
 			});
 			// STOP
 			button[4].setOnAction((actionEvent) -> {
-				//
+				for(int i = 0; i < button.length; i++) {
+					if(i == 4) {
+						continue;
+					}
+					button[i].setDisable(false);
+				}
 			});
 			// START
 			button[5].setOnAction((actionEvent) -> {
-				//
+				for(int i = 0; i < button.length; i++) {
+					if(i == 4) {
+						continue;
+					}
+					button[i].setDisable(true);
+				}
 			});
 
 			var gridPane = new GridPane();
