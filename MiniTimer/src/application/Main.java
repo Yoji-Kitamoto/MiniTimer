@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -16,15 +17,41 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			var label = new Label("00:00");
-			label.setAlignment(Pos.CENTER);
+			label.setFont(new Font(50));
 
 			String[] buttonLabel = {"10min", "1min", "10sec", "RESET", "STOP", "START"};
 			var button = new Button[6];
 			for(int i = 0; i < button.length; i++) {
 				button[i] = new Button(buttonLabel[i]);
+				button[i].setMinSize(60, 30);
 			}
+			// 10min
+			button[0].setOnAction((actionEvent)->{
+				//
+			});
+			// 1min
+			button[1].setOnAction((actionEvent)->{
+				//
+			});
+			// 10sec
+			button[2].setOnAction((actionEvent)->{
+				//
+			});
+			// RESET
+			button[3].setOnAction((actionEvent)->{
+				//
+			});
+			// STOP
+			button[4].setOnAction((actionEvent)->{
+				//
+			});
+			// STAT
+			button[5].setOnAction((actionEvent)->{
+				//
+			});
 
 			var gridPane = new GridPane();
+			gridPane.setAlignment(Pos.CENTER);
 			for(int i = 0; i < 2; i++) {
 				for(int j = 0; j < 3; j++) {
 					gridPane.add(button[i * 3 + j], j, i);
@@ -32,9 +59,9 @@ public class Main extends Application {
 			}
 
 			var vBox = new VBox(label, gridPane);
+			vBox.setAlignment(Pos.CENTER);
 
-			var borderPane = new BorderPane();
-			borderPane.setCenter(vBox);
+			var borderPane = new BorderPane(vBox);
 
 			var scene = new Scene(borderPane, 400, 400);
 
