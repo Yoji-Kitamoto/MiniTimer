@@ -74,15 +74,6 @@ public class Main extends Application {
 				second = 0;
 				label.setText(timeString());
 			});
-			// STOP
-			button[4].setOnAction((e) -> {
-				for(int i = 0; i < button.length; i++) {
-					if(i == 4) {
-						continue;
-					}
-					button[i].setDisable(false);
-				}
-			});
 			// START
 			button[5].setOnAction((actionEvent) -> {
 				for(int i = 0; i < button.length; i++) {
@@ -97,7 +88,7 @@ public class Main extends Application {
 				alert.getDialogPane().setHeaderText("終了");
 
 				var scheduledService = new ScheduledService<Boolean>() {
-					int count = 5;
+					int count = minute * 60 + second;
 
 					@Override
 					protected Task<Boolean> createTask() {
@@ -106,11 +97,12 @@ public class Main extends Application {
 							protected Boolean call() throws Exception {
 								Platform.runLater(() -> {
 									if(count == 0) {
-										label.setText("00 : 00");
 										alert.show();
-									} else {
-										label.setText("00 : 0" + String.valueOf(count));
 									}
+
+									minute = count / 60;
+									second = count % 60;
+									label.setText(timeString());
 								});
 
 								Thread.sleep(1000L);
@@ -122,8 +114,6 @@ public class Main extends Application {
 						};
 
 						if(count == 0) {
-							System.out.println("end");
-
 							for(int i = 0; i < button.length; i++) {
 								if(i == 4) {
 									continue;
@@ -131,12 +121,29 @@ public class Main extends Application {
 								button[i].setDisable(false);
 							}
 
+							minute = 0;
+							second = 0;
 							this.cancel();
 						}
 
 						return task;
 					}
 				};
+
+				// STOP
+				button[4].setOnAction((e) -> {
+					for(int i = 0; i < button.length; i++) {
+						if(i == 4) {
+							continue;
+						}
+						button[i].setDisable(false);
+					}
+
+					minute = 0;
+					second = 0;
+					label.setText(timeString());
+					scheduledService.cancel();
+				});
 
 				scheduledService.start();
 			});
