@@ -1,8 +1,12 @@
 package application;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -71,7 +75,7 @@ public class Main extends Application {
 				label.setText(timeString());
 			});
 			// STOP
-			button[4].setOnAction((actionEvent) -> {
+			button[4].setOnAction((e) -> {
 				for(int i = 0; i < button.length; i++) {
 					if(i == 4) {
 						continue;
@@ -87,6 +91,54 @@ public class Main extends Application {
 					}
 					button[i].setDisable(true);
 				}
+
+				var alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("終了");
+				alert.getDialogPane().setHeaderText("終了");
+
+				var scheduledService = new ScheduledService<Boolean>() {
+					int count = 5;
+
+					@Override
+					protected Task<Boolean> createTask() {
+						var task = new Task<Boolean>() {
+							@Override
+							protected Boolean call() throws Exception {
+								Platform.runLater(() -> {
+									if(count == 0) {
+										label.setText("00 : 00");
+										alert.show();
+									} else {
+										label.setText("00 : 0" + String.valueOf(count));
+									}
+								});
+
+								Thread.sleep(1000L);
+
+								count--;
+
+								return true;
+							}
+						};
+
+						if(count == 0) {
+							System.out.println("end");
+
+							for(int i = 0; i < button.length; i++) {
+								if(i == 4) {
+									continue;
+								}
+								button[i].setDisable(false);
+							}
+
+							this.cancel();
+						}
+
+						return task;
+					}
+				};
+
+				scheduledService.start();
 			});
 
 			var gridPane = new GridPane();
